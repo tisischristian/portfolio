@@ -35,10 +35,12 @@ export function ContactForm() {
   const v = state.values ?? {};
   return (
     <form action={action} noValidate className="space-y-10">
-      {/* honeypot */}
-      <div aria-hidden className="absolute -left-[9999px] h-0 overflow-hidden">
+      {/* Spam trap. Not rendered at all (`hidden`) and given a name/label no autofill recognises —
+          the old one was called "company", which phone autofill (Safari AutoFill Contact, Chrome
+          address profiles) filled in, so real messages from phones were silently discarded. */}
+      <div hidden aria-hidden>
         <label>
-          Company <input name="company" tabIndex={-1} autoComplete="off" />
+          Leave empty <input name="pf_hp_2b" tabIndex={-1} autoComplete="off" defaultValue="" />
         </label>
       </div>
 

@@ -56,12 +56,24 @@ async function notify(d: z.infer<typeof schema>) {
 }
 
 export async function sendMessage(_: ContactState, form: FormData): Promise<ContactState> {
-  // Honeypot: real people never fill this hidden field.
-  if (form.get("company")) return { status: "ok" };
+  // Spam trap: a field that is never rendered, so only bots fill it. Bots get a fake "ok";
+  // the log line makes any false positive visible in the Vercel logs.
+  if (String(form.get("pf_hp_2b") ?? "").trim()) {
+    console.warn("[contact] spam trap triggered — message discarded");
+    return { status: "ok" };
+  }
 
-  const parsed = schema.safeParse(Object.fromEntries(form));
+  // Validate only the known fields (ignores Next's internal $ACTION_* entries).
+  const parsed = schema.safeParse({
+    name: form.get("name") ?? "",
+    email: form.get("email") ?? "",
+    interest: form.get("interest") ?? "design",
+    budget: form.get("budget") ?? "",
+    body: form.get("body") ?? "",
+  });
   if (!parsed.success) {
     const f = parsed.error.flatten().fieldErrors;
+    console.info("[contact] validation failed:", Object.keys(f).join(", "));
     return {
       status: "error",
       message: "Please check the highlighted fields.",
@@ -72,8 +84,10 @@ export async function sendMessage(_: ContactState, form: FormData): Promise<Cont
 
   const h = await headers();
   const ip = h.get("x-forwarded-for")?.split(",")[0]?.trim() || h.get("x-real-ip") || "unknown";
-  if (limited(ip))
+  if (limited(ip)) {
+    console.warn("[contact] rate limited");
     return { status: "error", message: "Too many messages — please try again in a few minutes.", values: echo(form) };
+  }
 
   const sb = publicClient();
   if (!sb) return { status: "error", message: "The form isn't connected yet. Please email me directly.", values: echo(form) };
