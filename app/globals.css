@@ -31,19 +31,30 @@
 }
 
 /* Design + default = ink; Data = paper (inverted) */
+/* Dark (default) and light themes. The active one is set on <html data-theme> before paint
+   by the boot script in app/layout.tsx and switched with <ThemeToggle>. */
+:root,
 [data-theme="ink"] {
+  color-scheme: dark;
   --bg: var(--ink);
   --fg: var(--paper);
   --muted: var(--ash);
   --line: rgba(255, 255, 255, 0.12);
   --line-strong: rgba(255, 255, 255, 0.28);
+  --ph-bg: #151514;
+  --ph-fg: #f4f4f2;
+  --ph-mid: #40403e;
 }
 [data-theme="paper"] {
+  color-scheme: light;
   --bg: var(--paper);
   --fg: var(--ink);
   --muted: var(--graphite);
   --line: rgba(6, 6, 6, 0.12);
   --line-strong: rgba(6, 6, 6, 0.28);
+  --ph-bg: #ededec;
+  --ph-fg: #060606;
+  --ph-mid: #9f9f9f;
 }
 
 @theme inline {
@@ -70,12 +81,13 @@
 
 /* ───────── Base ───────── */
 html {
-  background: var(--ink);
+  background: var(--bg);
   -webkit-text-size-adjust: 100%;
 }
 body {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--bg);
+  color: var(--fg);
+  transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
   font-family: var(--font-sans);
   font-size: var(--fs-body);
   line-height: 1.5;
@@ -179,6 +191,11 @@ html.has-cursor select { cursor: auto; }
 html.lenis, html.lenis body { height: auto; }
 .lenis:not(.lenis-autoToggle).lenis-stopped { overflow: clip; }
 .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+/* Brand logos as monochrome silhouettes that follow the theme. */
+[data-theme="ink"] .brand-logo,
+:root:not([data-theme]) .brand-logo { filter: brightness(0) invert(1); }
+[data-theme="paper"] .brand-logo { filter: brightness(0); }
 
 .skip-link {
   position: fixed;

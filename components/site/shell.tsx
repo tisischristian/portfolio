@@ -20,8 +20,7 @@ export function Shell({ site, children }: { site: SiteConfig; children: React.Re
 
   return (
     <SiteProvider site={site}>
-      {/* Design and Data share the same black (ink) theme. */}
-      <div data-theme="ink" data-discipline={discipline ?? "home"} className="min-h-svh bg-bg text-fg">
+      <div data-discipline={discipline ?? "home"} className="min-h-svh bg-bg text-fg">
         <a href="#main" className="skip-link micro">
           Skip to content
         </a>

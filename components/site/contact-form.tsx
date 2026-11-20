@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { sendMessage, type ContactState } from "@/app/(site)/contact/actions";
+import { sendMessage, type ContactState } from "@/app/(site)/brief-me/actions";
 import { Arrow } from "@/components/ui/arrow";
 
 const field =

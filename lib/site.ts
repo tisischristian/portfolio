@@ -21,6 +21,22 @@ const base = {
     { label: "Instagram", href: "#" },
     { label: "GitHub", href: "#" },
   ],
+  /** Short line in the hero's bottom row (desktop). */
+  heroBlurb: "Inspired by editorial design. Grounded in data. Every decision considered.",
+  /** Home intro statement. Wrap words in *asterisks* to show them in full white (the rest is grey). */
+  introStatement:
+    "I’m a designer and analyst who *builds identities that hold their shape and data stories that drive decisions.* Two disciplines, one standard of clarity.",
+  /** Smaller paragraph under the intro statement. */
+  introBody:
+    "Whether it’s a brand system, a poster series or a dashboard your team opens every morning, the goal is the same: make the important thing obvious.",
+  /** Brands slider on the home page. `logo` = transparent PNG/WebP URL (shown as a monochrome silhouette); name is shown when there's no logo. */
+  brands: [
+    { name: "Northfield Roasters", logo: null as string | null, href: "" },
+    { name: "Halden Arts Festival", logo: null as string | null, href: "" },
+    { name: "Okra Studio", logo: null as string | null, href: "" },
+    { name: "Atlas Magazine", logo: null as string | null, href: "" },
+    { name: "Kora Type", logo: null as string | null, href: "" },
+  ],
   marquee: [
     "Identity systems",
     "Editorial layout",
@@ -69,14 +85,17 @@ export const defaults: SiteConfig = base;
 /** Fields editable from /admin/settings. */
 export const editableKeys = [
   "name", "monogram", "role", "location", "email", "available", "taglineDesign", "taglineData",
-  "portrait", "cvUrl", "socials", "marquee", "bio", "skills", "experience",
+  "portrait", "cvUrl", "socials", "brands", "marquee", "heroBlurb", "introStatement", "introBody", "bio", "skills", "experience",
 ] as const satisfies readonly (keyof SiteConfig)[];
 
 export type Discipline = "design" | "data";
 
+/** Main navigation. `match` = path prefixes that mark the item as current. */
 export const nav = [
-  { label: "Design", href: "/design" },
-  { label: "Data", href: "/data" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
+  { label: "Exhibits", href: "/design", match: ["/design", "/data"] },
+  { label: "Thoughts", href: "/thoughts", match: ["/thoughts"] },
+  { label: "Manifesto", href: "/manifesto", match: ["/manifesto"] },
+  { label: "Brief Me", href: "/brief-me", match: ["/brief-me"] },
 ] as const;
+
+export const CTA_LABEL = "Let’s Have Coffee";

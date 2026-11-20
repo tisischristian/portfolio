@@ -2,15 +2,17 @@
 export function ComingSoon({
   size = "sm",
   className = "",
+  label = "Data analysis",
   children,
 }: {
   size?: "sm" | "lg";
+  label?: string;
   className?: string;
   children?: React.ReactNode;
 }) {
   return (
     <div className={`border-t border-line pt-6 ${className}`}>
-      <p className="micro font-mono text-muted">{"// Data analysis"}</p>
+      <p className="micro font-mono text-muted">{`// ${label}`}</p>
       <p className={`display mt-4 ${size === "lg" ? "text-[length:var(--fs-h1)]" : "text-[length:var(--fs-h2)]"}`}>
         Coming soon
       </p>

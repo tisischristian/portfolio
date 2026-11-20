@@ -14,6 +14,17 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [{ protocol: "https", hostname: "*.supabase.co", pathname: "/storage/v1/object/public/**" }],
   },
+  // Renamed pages keep their old links working.
+  async redirects() {
+    return [
+      { source: "/about", destination: "/manifesto", permanent: true },
+      { source: "/contact", destination: "/brief-me", permanent: true },
+      { source: "/exhibits", destination: "/design", permanent: false },
+      { source: "/blog", destination: "/thoughts", permanent: true },
+      { source: "/scribbles/:path*", destination: "/thoughts/:path*", permanent: true },
+      { source: "/scribbles", destination: "/thoughts", permanent: true },
+    ];
+  },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

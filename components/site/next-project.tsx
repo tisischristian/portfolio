@@ -7,7 +7,7 @@ export function NextProject({ p }: { p: Project | null }) {
   return (
     <Link href={`/${p.discipline}/${p.slug}`} data-cursor="Next" className="group mt-28 block lg:mt-40">
       <div className="container-x py-16 sm:py-24">
-        <p className="micro font-mono text-muted">{"// Next project"}</p>
+        <p className="micro font-mono text-muted">{"// Next exhibit"}</p>
         <p className="display mt-6 flex items-start justify-between gap-6 text-[length:var(--fs-h1)] transition-transform duration-700 ease-[var(--ease)] group-hover:translate-x-3">
           {p.title}
           <span aria-hidden className="text-[0.6em] transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1">

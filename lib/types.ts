@@ -66,3 +66,24 @@ export type Project = {
 };
 
 export const isSample = (p: Pick<Project, "id">) => p.id.startsWith("sample-");
+
+export type PostTopic = "design" | "data" | "both";
+
+/** Mirrors the `public.posts` table (Thoughts). */
+export type Post = {
+  id: string;
+  title: string;
+  slug: string;
+  excerpt: string | null;
+  cover_url: string | null;
+  cover_alt: string | null;
+  topic: PostTopic;
+  tags: string[];
+  blocks: Block[];
+  status: "draft" | "published";
+  featured: boolean;
+  seo_title: string | null;
+  seo_description: string | null;
+  published_at: string | null;
+  updated_at: string;
+};

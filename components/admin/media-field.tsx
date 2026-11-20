@@ -53,7 +53,7 @@ export function MediaPicker({
       onClick={(e) => e.target === ref.current && ref.current?.close()}
       className="m-auto max-h-[85svh] w-[min(960px,calc(100vw-32px))] border border-line-strong bg-bg p-0 text-fg backdrop:bg-black/70"
     >
-      <div data-theme="ink" className="flex max-h-[85svh] flex-col bg-bg text-fg">
+      <div className="flex max-h-[85svh] flex-col bg-bg text-fg">
         <div className="flex items-center gap-4 border-b border-line p-4">
           <h2 id={titleId} className="micro font-mono">{"// Media library"}</h2>
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search…" className={`${inputCls} ml-auto max-w-56`} />

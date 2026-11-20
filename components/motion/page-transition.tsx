@@ -5,7 +5,17 @@ import { useEffect, useRef, useState } from "react";
 import { EASE_IN_OUT, gsap, prefersReduced } from "@/lib/motion";
 
 const labelFor = (path: string) =>
-  path.startsWith("/data") ? "Data" : path.startsWith("/design") ? "Design" : path.startsWith("/about") ? "About" : path.startsWith("/contact") ? "Contact" : "Index";
+  path.startsWith("/data")
+    ? "Data"
+    : path.startsWith("/design")
+      ? "Design"
+      : path.startsWith("/thoughts")
+        ? "Thoughts"
+        : path.startsWith("/manifesto")
+          ? "Manifesto"
+          : path.startsWith("/brief-me")
+            ? "Brief Me"
+            : "Index";
 
 /**
  * Ink wipe between pages. Internal link clicks are intercepted (capture phase, so
@@ -78,7 +88,6 @@ export function PageTransition() {
     <div
       ref={panel}
       aria-hidden
-      data-theme="ink"
       style={{ display: "none" }}
       className="fixed inset-0 z-[90] items-end border-t border-line-strong bg-bg text-fg"
     >

@@ -5,13 +5,15 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { signOut } from "@/app/admin/actions";
 import { Arrow } from "@/components/ui/arrow";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const links = [
   { href: "/admin", label: "Dashboard", n: "00" },
-  { href: "/admin/projects", label: "Projects", n: "01" },
-  { href: "/admin/media", label: "Media", n: "02" },
-  { href: "/admin/messages", label: "Messages", n: "03" },
-  { href: "/admin/settings", label: "Settings", n: "04" },
+  { href: "/admin/projects", label: "Exhibits", n: "01" },
+  { href: "/admin/thoughts", label: "Thoughts", n: "02" },
+  { href: "/admin/media", label: "Media", n: "03" },
+  { href: "/admin/messages", label: "Messages", n: "04" },
+  { href: "/admin/settings", label: "Settings", n: "05" },
 ];
 
 export function AdminShell({
@@ -56,14 +58,17 @@ export function AdminShell({
       <p className="truncate font-mono text-muted normal-case" title={email}>
         {email}
       </p>
-      <form action={signOut}>
-        <button className="text-muted hover:text-fg hover:underline">Sign out</button>
-      </form>
+      <div className="flex items-center justify-between">
+        <form action={signOut}>
+          <button className="text-muted hover:text-fg hover:underline">Sign out</button>
+        </form>
+        <ThemeToggle className="-mr-2" />
+      </div>
     </div>
   );
 
   return (
-    <div data-theme="ink" className="min-h-svh bg-bg text-fg lg:grid lg:grid-cols-[248px_1fr]">
+    <div className="min-h-svh bg-bg text-fg lg:grid lg:grid-cols-[248px_1fr]">
       {/* Desktop sidebar */}
       <aside className="sticky top-0 hidden h-svh flex-col justify-between border-r border-line p-4 lg:flex">
         <div>

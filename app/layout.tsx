@@ -45,6 +45,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const bootScript = `(function(){try{var d=document.documentElement,c=d.classList;c.add('js');
+var t=null;try{t=localStorage.getItem('pf-theme')}catch(e){}d.setAttribute('data-theme',t==='paper'?'paper':'ink');
 var r=matchMedia('(prefers-reduced-motion: reduce)').matches;if(r)c.add('reduce');
 var p=location.pathname,site=!/^\\/(admin|preview)/.test(p),seen=false;
 try{seen=sessionStorage.getItem('pf-seen')==='1'}catch(e){}

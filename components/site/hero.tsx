@@ -94,7 +94,7 @@ export async function Hero() {
         <div className="micro relative z-20 mt-10 mb-8 grid grid-cols-2 items-end gap-6 sm:mb-10 lg:grid-cols-12">
           <p className="whitespace-pre-line text-muted lg:col-span-3">{site.location}</p>
           <p className="hidden max-w-xs text-muted lg:col-span-3 lg:block">
-            Inspired by editorial design. Grounded in data. Every decision considered.
+            {site.heroBlurb}
           </p>
           <ul className="font-mono lg:col-span-3 lg:col-start-10">
             <li>Visual identity</li>

@@ -22,9 +22,9 @@ export function Footer() {
   return (
     <footer className="pt-24 pb-28 sm:pb-10">
       <div className="container-x">
-        <p className="micro mb-6 font-mono text-muted">{"// Contact"}</p>
+        <p className="micro mb-6 font-mono text-muted">{"// Brief me"}</p>
         <Link
-          href="/contact"
+          href="/brief-me"
           data-cursor="Say hi"
           className="display group inline-flex items-start gap-[0.1em] text-[clamp(3.5rem,13vw,12rem)]"
         >

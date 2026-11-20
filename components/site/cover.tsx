@@ -10,10 +10,10 @@ function hash(s: string) {
 /** Generated monochrome artwork used when a project has no image yet. */
 function Placeholder({ seed, discipline }: { seed: string; discipline: Discipline }) {
   const h = hash(seed);
-  const dark = true; // all sections are black now
-  const bg = dark ? "#151514" : "#EDEDEC";
-  const fg = dark ? "#F4F4F2" : "#060606";
-  const mid = dark ? "#40403E" : "#9F9F9F";
+  // Theme-aware via CSS variables (see --ph-* in globals.css), so placeholders follow light/dark mode.
+  const bg = "var(--ph-bg)";
+  const fg = "var(--ph-fg)";
+  const mid = "var(--ph-mid)";
   const v = h % 5;
   const letter = seed.replace(/[^a-z]/gi, "").charAt(0).toUpperCase() || "A";
 
@@ -21,26 +21,26 @@ function Placeholder({ seed, discipline }: { seed: string; discipline: Disciplin
   if (discipline === "design") {
     art = [
       <g key="0">
-        <circle cx="200" cy="150" r="96" fill="none" stroke={fg} strokeWidth="26" />
-        <circle cx="200" cy="150" r="34" fill={fg} />
+        <circle cx="200" cy="150" r="96" fill="none" style={{ stroke: fg }} strokeWidth="26" />
+        <circle cx="200" cy="150" r="34" style={{ fill: fg }} />
       </g>,
-      <text key="1" x="200" y="232" textAnchor="middle" fontFamily="Arial Black, sans-serif" fontWeight="900" fontSize="260" fill={fg}>
+      <text key="1" x="200" y="232" textAnchor="middle" fontFamily="Arial Black, sans-serif" fontWeight="900" fontSize="260" style={{ fill: fg }}>
         {letter}
       </text>,
       <g key="2">
         {Array.from({ length: 14 }).map((_, i) => (
-          <rect key={i} x={-80 + i * 40} y="-40" width="16" height="420" fill={i % 3 ? mid : fg} transform="rotate(28 200 150)" />
+          <rect key={i} x={-80 + i * 40} y="-40" width="16" height="420" style={{ fill: i % 3 ? mid : fg }} transform="rotate(28 200 150)" />
         ))}
       </g>,
       <g key="3">
         {Array.from({ length: 63 }).map((_, i) => (
-          <circle key={i} cx={40 + (i % 9) * 40} cy={30 + Math.floor(i / 9) * 40} r={(i + h) % 4 === 0 ? 12 : 4} fill={fg} />
+          <circle key={i} cx={40 + (i % 9) * 40} cy={30 + Math.floor(i / 9) * 40} r={(i + h) % 4 === 0 ? 12 : 4} style={{ fill: fg }} />
         ))}
       </g>,
       <g key="4">
-        <rect x="70" y="40" width="260" height="70" fill={fg} />
-        <rect x="70" y="122" width="170" height="70" fill={mid} />
-        <rect x="70" y="204" width="220" height="56" fill="none" stroke={fg} strokeWidth="6" />
+        <rect x="70" y="40" width="260" height="70" style={{ fill: fg }} />
+        <rect x="70" y="122" width="170" height="70" style={{ fill: mid }} />
+        <rect x="70" y="204" width="220" height="56" fill="none" style={{ stroke: fg }} strokeWidth="6" />
       </g>,
     ][v];
   } else {
@@ -48,35 +48,35 @@ function Placeholder({ seed, discipline }: { seed: string; discipline: Disciplin
     art = [
       <g key="0">
         {pts.map((p, i) => (
-          <rect key={i} x={40 + i * 36} y={260 - p} width="22" height={p} fill={i === (h % 9) ? fg : mid} />
+          <rect key={i} x={40 + i * 36} y={260 - p} width="22" height={p} style={{ fill: i === (h % 9) ? fg : mid }} />
         ))}
-        <line x1="30" y1="260" x2="370" y2="260" stroke={fg} strokeWidth="2" />
+        <line x1="30" y1="260" x2="370" y2="260" style={{ stroke: fg }} strokeWidth="2" />
       </g>,
       <g key="1">
-        <polyline points={pts.map((p, i) => `${40 + i * 40},${270 - p}`).join(" ")} fill="none" stroke={fg} strokeWidth="5" />
-        <polyline points={pts.map((p, i) => `${40 + i * 40},${290 - p * 0.6}`).join(" ")} fill="none" stroke={mid} strokeWidth="3" strokeDasharray="8 6" />
+        <polyline points={pts.map((p, i) => `${40 + i * 40},${270 - p}`).join(" ")} fill="none" style={{ stroke: fg }} strokeWidth="5" />
+        <polyline points={pts.map((p, i) => `${40 + i * 40},${290 - p * 0.6}`).join(" ")} fill="none" style={{ stroke: mid }} strokeWidth="3" strokeDasharray="8 6" />
       </g>,
       <g key="2">
         {Array.from({ length: 40 }).map((_, i) => {
           const x = 40 + ((h * (i + 3)) % 320);
           const y = 260 - (x - 40) * 0.6 + (((h >> (i % 16)) % 70) - 35);
-          return <circle key={i} cx={x} cy={y} r="6" fill={i % 5 ? mid : fg} />;
+          return <circle key={i} cx={x} cy={y} r="6" style={{ fill: i % 5 ? mid : fg }} />;
         })}
       </g>,
       <g key="3">
-        <path d={`M30 270 ${pts.map((p, i) => `L${30 + i * 42} ${270 - p}`).join(" ")} L366 270 Z`} fill={mid} />
-        <path d={`M30 270 ${pts.map((p, i) => `L${30 + i * 42} ${270 - p * 0.55}`).join(" ")} L366 270 Z`} fill={fg} />
+        <path d={`M30 270 ${pts.map((p, i) => `L${30 + i * 42} ${270 - p}`).join(" ")} L366 270 Z`} style={{ fill: mid }} />
+        <path d={`M30 270 ${pts.map((p, i) => `L${30 + i * 42} ${270 - p * 0.55}`).join(" ")} L366 270 Z`} style={{ fill: fg }} />
       </g>,
       <g key="4">
-        <circle cx="200" cy="150" r="100" fill="none" stroke={mid} strokeWidth="40" />
-        <circle cx="200" cy="150" r="100" fill="none" stroke={fg} strokeWidth="40" strokeDasharray={`${200 + (h % 300)} 999`} transform="rotate(-90 200 150)" />
+        <circle cx="200" cy="150" r="100" fill="none" style={{ stroke: mid }} strokeWidth="40" />
+        <circle cx="200" cy="150" r="100" fill="none" style={{ stroke: fg }} strokeWidth="40" strokeDasharray={`${200 + (h % 300)} 999`} transform="rotate(-90 200 150)" />
       </g>,
     ][v];
   }
 
   return (
     <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 size-full" aria-hidden>
-      <rect width="400" height="300" fill={bg} />
+      <rect width="400" height="300" style={{ fill: bg }} />
       {art}
     </svg>
   );

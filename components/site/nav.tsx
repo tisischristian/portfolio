@@ -3,11 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getLenis } from "@/lib/motion";
-import { nav, type Discipline } from "@/lib/site";
-import { useSite } from "./site-context";
-import { DisciplineSwitch } from "./discipline-switch";
 import { Arrow } from "@/components/ui/arrow";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { getLenis } from "@/lib/motion";
+import { CTA_LABEL, nav, type Discipline } from "@/lib/site";
+import { DisciplineSwitch } from "./discipline-switch";
+import { useSite } from "./site-context";
+
+const isCurrent = (pathname: string, match: readonly string[]) => match.some((m) => pathname.startsWith(m));
 
 export function Nav({ discipline }: { discipline: Discipline | null }) {
   const site = useSite();
@@ -39,27 +42,26 @@ export function Nav({ discipline }: { discipline: Discipline | null }) {
       <header className="fixed inset-x-0 top-3 z-50 sm:top-4">
         <div className="container-x">
           <div
-            className={`flex h-14 items-center justify-between gap-4 rounded-full border pl-5 pr-2 transition-[background-color,border-color,backdrop-filter] duration-500 ${
-              scrolled || open
-                ? "border-line-strong bg-bg/70 backdrop-blur-xl"
-                : "border-transparent bg-transparent"
+            className={`flex h-14 items-center justify-between gap-3 rounded-full border pr-2 pl-5 transition-[background-color,border-color,backdrop-filter] duration-500 ${
+              scrolled || open ? "border-line-strong bg-bg/70 backdrop-blur-xl" : "border-transparent bg-transparent"
             }`}
           >
             <Link href="/" className="micro flex items-center gap-3 font-semibold">
               <span className="font-mono">{site.monogram}</span>
-              <span aria-hidden className="hidden h-px w-8 bg-current md:block" />
-              <span className="hidden text-muted md:block">{site.role}</span>
+              <span aria-hidden className="hidden h-px w-8 bg-current xl:block" />
+              <span className="hidden text-muted xl:block">{site.role}</span>
             </Link>
 
+            {/* Exhibits: Design | Data */}
             <DisciplineSwitch active={discipline} className="hidden sm:flex" />
 
-            <div className="flex items-center gap-2">
-              <ul className="hidden items-center gap-6 lg:flex">
-                {nav.slice(2).map((l) => (
+            <div className="flex items-center gap-1">
+              <ul className="mr-2 hidden items-center gap-5 lg:flex">
+                {nav.slice(1).map((l) => (
                   <li key={l.href}>
                     <Link
                       href={l.href}
-                      aria-current={pathname === l.href ? "page" : undefined}
+                      aria-current={isCurrent(pathname, l.match) ? "page" : undefined}
                       className="micro underline-offset-4 hover:underline aria-[current=page]:underline"
                     >
                       {l.label}
@@ -67,12 +69,13 @@ export function Nav({ discipline }: { discipline: Discipline | null }) {
                   </li>
                 ))}
               </ul>
+              <ThemeToggle />
               <Link
-                href="/contact"
+                href="/brief-me"
                 data-magnetic
-                className="micro hidden h-10 items-center rounded-full bg-fg px-4 text-bg transition-opacity hover:opacity-80 md:ml-4 md:inline-flex"
+                className="micro ml-1 hidden h-10 items-center gap-2 rounded-full bg-fg px-4 text-bg transition-opacity hover:opacity-80 md:inline-flex"
               >
-                Get in touch <Arrow />
+                {CTA_LABEL} <Arrow />
               </Link>
               <button
                 type="button"
@@ -95,11 +98,7 @@ export function Nav({ discipline }: { discipline: Discipline | null }) {
       </header>
 
       {/* Full-screen mobile / tablet menu */}
-      <div
-        id="menu"
-        hidden={!open}
-        className="fixed inset-0 z-40 flex flex-col bg-bg pt-28 pb-28 lg:hidden"
-      >
+      <div id="menu" hidden={!open} className="fixed inset-0 z-40 flex flex-col bg-bg pt-28 pb-28 lg:hidden">
         <nav aria-label="Main" className="container-x flex flex-1 flex-col justify-center">
           <ol className="divide-y divide-line border-y border-line">
             {nav.map((l, i) => (
@@ -107,7 +106,7 @@ export function Nav({ discipline }: { discipline: Discipline | null }) {
                 <Link
                   href={l.href}
                   className="flex items-baseline justify-between py-4"
-                  aria-current={pathname.startsWith(l.href) ? "page" : undefined}
+                  aria-current={isCurrent(pathname, l.match) ? "page" : undefined}
                 >
                   <span className="display text-[clamp(2.5rem,12vw,5rem)]">{l.label}</span>
                   <span className="font-mono text-sm text-muted">0{i + 1}</span>
@@ -115,13 +114,19 @@ export function Nav({ discipline }: { discipline: Discipline | null }) {
               </li>
             ))}
           </ol>
+          <Link
+            href="/brief-me"
+            className="micro mt-8 inline-flex h-12 w-fit items-center gap-2 rounded-full bg-fg px-5 text-bg md:hidden"
+          >
+            {CTA_LABEL} <Arrow />
+          </Link>
         </nav>
         <div className="container-x micro flex items-end justify-between gap-6 text-muted">
           <p className="whitespace-pre-line">{site.location}</p>
         </div>
       </div>
 
-      {/* Mobile: discipline switch pinned to the bottom */}
+      {/* Mobile: Exhibits switch pinned to the bottom */}
       <div className="fixed inset-x-0 bottom-4 z-50 flex justify-center sm:hidden">
         <DisciplineSwitch active={discipline} className="bg-bg/80 backdrop-blur-xl" />
       </div>

@@ -131,6 +131,66 @@ export async function reorderProjects(ids: string[]): Promise<ActionResult> {
   return { ok: true };
 }
 
+// ───────── Thoughts (posts) ─────────
+
+const postSchema = z.object({
+  id: z.string().uuid().optional(),
+  title: z.string().trim().min(1, "Title is required").max(200),
+  slug: z
+    .string()
+    .trim()
+    .min(1, "Slug is required")
+    .max(120)
+    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Slug can only use lowercase letters, numbers and dashes"),
+  excerpt: str,
+  cover_url: str,
+  cover_alt: str,
+  topic: z.enum(["design", "data", "both"]),
+  tags: z.array(z.string().trim().min(1)).default([]),
+  featured: z.boolean().default(false),
+  status: z.enum(["draft", "published"]),
+  blocks: z.array(z.record(z.string(), z.unknown()).and(z.object({ type: z.string() }))).default([]),
+  seo_title: str,
+  seo_description: str,
+});
+
+export type PostInput = z.input<typeof postSchema>;
+
+export async function savePost(input: PostInput): Promise<ActionResult> {
+  const { sb } = await requireAdmin();
+  const parsed = postSchema.safeParse(input);
+  if (!parsed.success) return { ok: false, error: parsed.error.issues[0]?.message ?? "Invalid post" };
+  const { id, ...row } = parsed.data;
+  if (row.cover_url && !row.cover_alt) return { ok: false, error: "The cover image needs alt text." };
+
+  const result = id
+    ? await sb.from("posts").update(row).eq("id", id).select("id").single()
+    : await sb.from("posts").insert(row).select("id").single();
+
+  if (result.error) {
+    if (result.error.code === "23505") return { ok: false, error: "Another thought already uses this slug." };
+    return { ok: false, error: result.error.message };
+  }
+  refreshSite();
+  return { ok: true, id: result.data.id };
+}
+
+export async function setPostStatus(id: string, status: "draft" | "published"): Promise<ActionResult> {
+  const { sb } = await requireAdmin();
+  const { error } = await sb.from("posts").update({ status }).eq("id", id);
+  if (error) return { ok: false, error: error.message };
+  refreshSite();
+  return { ok: true };
+}
+
+export async function deletePost(id: string): Promise<ActionResult> {
+  const { sb } = await requireAdmin();
+  const { error } = await sb.from("posts").delete().eq("id", id);
+  if (error) return { ok: false, error: error.message };
+  refreshSite();
+  return { ok: true };
+}
+
 // ───────── Media ─────────
 
 export async function deleteMedia(id: string): Promise<ActionResult> {

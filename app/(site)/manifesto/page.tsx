@@ -5,13 +5,14 @@ import { ComingSoon } from "@/components/site/coming-soon";
 import { Cover } from "@/components/site/cover";
 import { getProjects } from "@/lib/projects";
 import { SectionLabel } from "@/components/ui/section-label";
+import { CTA_LABEL } from "@/lib/site";
 import { getSite } from "@/lib/site-settings";
 import { Reveal } from "@/components/motion/reveal";
 import { Arrow } from "@/components/ui/arrow";
 
 export async function generateMetadata(): Promise<Metadata> {
   const site = await getSite();
-  return { title: "About", description: `About ${site.name} — ${site.role}.` };
+  return { title: "Manifesto", description: `Manifesto — ${site.name}, ${site.role}.` };
 }
 
 export default async function About() {
@@ -20,8 +21,8 @@ export default async function About() {
   return (
     <>
       <header className="container-x pt-36 pb-16 sm:pt-44">
-        <SectionLabel>About</SectionLabel>
-        <Reveal as="h1" className="display mt-6 text-[length:var(--fs-hero)]">About</Reveal>
+        <SectionLabel>Manifesto</SectionLabel>
+        <Reveal as="h1" className="display mt-6 text-[length:var(--fs-hero)]">Manifesto</Reveal>
       </header>
 
       <section className="container-x grid gap-12 pb-28 lg:grid-cols-12 lg:pb-40">
@@ -54,10 +55,10 @@ export default async function About() {
               </a>
             )}
             <Link
-              href="/contact"
+              href="/brief-me"
               className="micro inline-flex h-11 items-center rounded-full border border-line-strong px-5 transition-colors hover:bg-fg hover:text-bg"
             >
-              Get in touch <Arrow />
+              {CTA_LABEL} <Arrow />
             </Link>
           </div>
         </div>

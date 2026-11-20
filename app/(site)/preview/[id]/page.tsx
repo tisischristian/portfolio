@@ -23,7 +23,7 @@ export default async function PreviewPage({ params }: Props) {
   const p = data as Project;
 
   return (
-    <div data-theme="ink" className="bg-bg text-fg">
+    <div className="bg-bg text-fg">
       <div className="micro fixed inset-x-0 bottom-20 z-50 flex justify-center px-4 sm:bottom-6">
         <div className="flex items-center gap-4 rounded-full bg-fg py-2 pr-2 pl-5 text-bg shadow-lg">
           <span className="font-mono">

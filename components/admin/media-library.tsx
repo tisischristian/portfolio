@@ -66,7 +66,7 @@ export function MediaLibrary({ initial, usage }: { initial: MediaRow[]; usage: R
         className={`grid place-items-center border border-dashed p-10 text-center transition-colors ${over ? "border-fg bg-line" : "border-line-strong"}`}
       >
         <p className="text-lg">Drop files to upload</p>
-        <p className="micro mt-2 text-muted">Images (auto-compressed to WebP) · MP4/WebM · PDF · CSV/JSON — images ≤ 20 MB, video ≤ 50 MB</p>
+        <p className="micro mt-2 text-muted">Images incl. SVG logos (auto-converted to WebP) · MP4/WebM · PDF · CSV/JSON — images ≤ 20 MB, video ≤ 50 MB</p>
         <button type="button" onClick={() => input.current?.click()} className={`${btnPrimary} mt-6`}>
           Choose files
         </button>

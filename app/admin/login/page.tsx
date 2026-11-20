@@ -14,7 +14,7 @@ export default async function LoginPage({ searchParams }: Props) {
   if (user && isAdmin) redirect(next?.startsWith("/admin") ? next : "/admin");
 
   return (
-    <main data-theme="ink" className="grid min-h-svh place-items-center bg-bg px-4 py-16 text-fg">
+    <main className="grid min-h-svh place-items-center bg-bg px-4 py-16 text-fg">
       <div className="w-full max-w-sm">
         <p className="micro font-mono text-muted">{"// Admin"}</p>
         <h1 className="display mt-4 text-5xl">Sign in</h1>

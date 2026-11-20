@@ -7,7 +7,24 @@ import { prefersReduced, scrollState } from "@/lib/motion";
  * Infinite ticker (Howat reference). Drifts left, flips direction with the scroll direction,
  * speeds up with scroll velocity and pauses on hover. Static under reduced motion.
  */
-export function Marquee({ items, className = "" }: { items: readonly string[]; className?: string }) {
+export function Marquee({
+  items,
+  className = "",
+  separator = true,
+  speed = 0.045,
+  reverse = false,
+  gapClass = "gap-8 pr-8",
+}: {
+  items: readonly React.ReactNode[];
+  className?: string;
+  /** Small square between items. */
+  separator?: boolean;
+  /** Base drift in px per ms. */
+  speed?: number;
+  /** Drift right instead of left (still flips with scroll direction). */
+  reverse?: boolean;
+  gapClass?: string;
+}) {
   const track = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -26,8 +43,8 @@ export function Marquee({ items, className = "" }: { items: readonly string[]; c
       last = now;
       if (!paused && visible) {
         const half = el.scrollWidth / 2;
-        const speed = 0.045 + Math.min(Math.abs(scrollState.velocity) * 0.02, 0.6);
-        x -= scrollState.direction * speed * dt;
+        const v = speed + Math.min(Math.abs(scrollState.velocity) * 0.02, 0.6);
+        x -= scrollState.direction * (reverse ? -1 : 1) * v * dt;
         if (x <= -half) x += half;
         if (x > 0) x -= half;
         el.style.transform = `translate3d(${x}px,0,0)`;
@@ -41,14 +58,14 @@ export function Marquee({ items, className = "" }: { items: readonly string[]; c
       el.removeEventListener("pointerenter", enter);
       el.removeEventListener("pointerleave", leave);
     };
-  }, []);
+  }, [speed, reverse]);
 
   const row = (hidden: boolean) => (
-    <ul aria-hidden={hidden || undefined} className="flex shrink-0 items-center gap-8 pr-8">
+    <ul aria-hidden={hidden || undefined} className={`flex shrink-0 items-center ${gapClass}`}>
       {items.map((t, i) => (
-        <li key={i} className="flex items-center gap-8 whitespace-nowrap">
+        <li key={i} className={`flex items-center whitespace-nowrap ${gapClass.split(" ")[0]}`}>
           {t}
-          <span aria-hidden className="size-1.5 bg-current" />
+          {separator && <span aria-hidden className="size-1.5 bg-current" />}
         </li>
       ))}
     </ul>

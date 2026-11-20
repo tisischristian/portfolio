@@ -20,10 +20,10 @@ const MB = 1024 * 1024;
 const LIMITS: Record<string, number> = { image: 20 * MB, video: 50 * MB, other: 25 * MB };
 
 export const ACCEPT = {
-  image: "image/jpeg,image/png,image/webp,image/avif,image/gif",
+  image: "image/jpeg,image/png,image/webp,image/avif,image/gif,image/svg+xml",
   video: "video/mp4,video/webm",
   pdf: "application/pdf",
-  any: "image/jpeg,image/png,image/webp,image/avif,image/gif,video/mp4,video/webm,application/pdf,text/csv,application/json",
+  any: "image/jpeg,image/png,image/webp,image/avif,image/gif,image/svg+xml,video/mp4,video/webm,application/pdf,text/csv,application/json",
 };
 
 const ALLOWED = new Set(ACCEPT.any.split(","));
@@ -33,6 +33,34 @@ const slugify = (s: string) =>
 
 async function toBlob(canvas: HTMLCanvasElement, type: string, quality: number) {
   return new Promise<Blob>((res, rej) => canvas.toBlob((b) => (b ? res(b) : rej(new Error("Encode failed"))), type, quality));
+}
+
+/**
+ * SVGs (typical for logos) are rasterised here, in the browser, to a transparent WebP ~1600px wide.
+ * Only the pixels are uploaded, so no SVG markup (which can carry scripts) is ever stored or served.
+ */
+async function rasteriseSvg(file: File): Promise<File> {
+  const url = URL.createObjectURL(file);
+  try {
+    const img = new Image();
+    img.decoding = "async";
+    await new Promise<void>((res, rej) => {
+      img.onload = () => res();
+      img.onerror = () => rej(new Error(`${file.name}: couldn't read this SVG`));
+      img.src = url;
+    });
+    const nw = img.naturalWidth || 800;
+    const nh = img.naturalHeight || 400;
+    const scale = 1600 / Math.max(nw, nh);
+    const c = document.createElement("canvas");
+    c.width = Math.round(nw * scale);
+    c.height = Math.round(nh * scale);
+    c.getContext("2d")!.drawImage(img, 0, 0, c.width, c.height);
+    const blob = await toBlob(c, "image/webp", 0.92);
+    return new File([blob], file.name.replace(/\.svg$/i, ".webp"), { type: "image/webp" });
+  } finally {
+    URL.revokeObjectURL(url);
+  }
 }
 
 /** Resize to ≤2560px and re-encode as WebP; returns dimensions + a tiny blur placeholder. */
@@ -62,7 +90,8 @@ async function processImage(file: File) {
 }
 
 /** Upload one file to the public-media bucket and record it in the media table. */
-export async function uploadFile(file: File, alt = ""): Promise<MediaRow> {
+export async function uploadFile(input: File, alt = ""): Promise<MediaRow> {
+  const file = input.type === "image/svg+xml" ? await rasteriseSvg(input) : input;
   if (!ALLOWED.has(file.type)) throw new Error(`${file.name}: file type not supported (${file.type || "unknown"})`);
   const kind = file.type.startsWith("image/") ? "image" : file.type.startsWith("video/") ? "video" : "other";
   if (file.size > LIMITS[kind]) throw new Error(`${file.name}: too large (max ${LIMITS[kind] / MB} MB)`);

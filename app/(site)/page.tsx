@@ -1,11 +1,15 @@
 import Link from "next/link";
 import { Hero } from "@/components/site/hero";
+import { Brands } from "@/components/site/brands";
 import { ComingSoon } from "@/components/site/coming-soon";
 import { DataCard, DesignCard } from "@/components/site/project-cards";
 import { Services } from "@/components/site/services";
 import { SplitEntry } from "@/components/site/split-entry";
 import { SectionLabel } from "@/components/ui/section-label";
+import { ThoughtList } from "@/components/thoughts/thought-list";
+import { getPosts } from "@/lib/posts";
 import { getFeatured } from "@/lib/projects";
+import { toRows } from "@/lib/thought-rows";
 import { Reveal } from "@/components/motion/reveal";
 import { Arrow } from "@/components/ui/arrow";
 import { JsonLd } from "@/components/seo/json-ld";
@@ -13,6 +17,19 @@ import { siteUrl } from "@/lib/seo";
 import { getSite } from "@/lib/site-settings";
 
 export const revalidate = 60;
+
+/** Text wrapped in *asterisks* is shown in full white; the rest stays grey. */
+function highlight(text: string) {
+  return text.split(/\*([^*]+)\*/g).map((part, i) =>
+    i % 2 ? (
+      <span key={i} className="text-fg">
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
+}
 
 // Editorial rhythm for the featured design grid (12-col on desktop).
 const layout = [
@@ -23,7 +40,7 @@ const layout = [
 ];
 
 export default async function Home() {
-  const [design, data, site] = await Promise.all([getFeatured("design", 4), getFeatured("data", 3), getSite()]);
+  const [design, data, site, posts] = await Promise.all([getFeatured("design", 4), getFeatured("data", 3), getSite(), getPosts()]);
 
   return (
     <>
@@ -50,19 +67,12 @@ export default async function Home() {
             as="p"
             className="text-[length:var(--fs-h2)] leading-[1.1] font-medium tracking-tight text-muted lg:col-span-10"
           >
-            I&rsquo;m a designer and analyst who{" "}
-            <span className="text-fg">
-              builds identities that hold their shape <em className="italic">and</em> data stories that drive decisions.
-            </span>{" "}
-            Two disciplines, one standard of clarity.
+            {highlight(site.introStatement)}
           </Reveal>
           <div className="lg:col-span-5 lg:col-start-6">
-            <p className="max-w-md text-sm text-muted">
-              Whether it&rsquo;s a brand system, a poster series or a dashboard your team opens every morning, the goal is the
-              same: make the important thing obvious.
-            </p>
+            <p className="max-w-md text-sm text-muted">{site.introBody}</p>
             <Link
-              href="/about"
+              href="/manifesto"
               data-magnetic
               className="micro mt-8 inline-flex h-11 items-center rounded-full border border-line-strong px-5 transition-colors hover:bg-fg hover:text-bg"
             >
@@ -72,18 +82,20 @@ export default async function Home() {
         </div>
       </section>
 
+      <Brands index="02" />
+
       {/* Featured design */}
       <section className="py-28 lg:py-40">
         <div className="container-x">
           <div className="flex items-end justify-between gap-6">
             <div>
-              <SectionLabel index="02">Selected design</SectionLabel>
+              <SectionLabel index="03">Selected design</SectionLabel>
               <Reveal as="h2" className="display mt-4 text-[length:var(--fs-h1)]">
                 Design
               </Reveal>
             </div>
             <Link href="/design" className="micro shrink-0 underline-offset-4 hover:underline">
-              All design work <Arrow />
+              All design exhibits <Arrow />
             </Link>
           </div>
           <div className="mt-16 grid gap-x-[var(--gutter)] gap-y-16 sm:grid-cols-2 lg:grid-cols-12">
@@ -101,14 +113,14 @@ export default async function Home() {
         <div className="container-x">
           <div className="flex items-end justify-between gap-6">
             <div>
-              <SectionLabel index="03">Selected data</SectionLabel>
+              <SectionLabel index="04">Selected data</SectionLabel>
               <Reveal as="h2" className="display mt-4 text-[length:var(--fs-h1)]">
                 Data
               </Reveal>
             </div>
             {data.length > 0 && (
               <Link href="/data" className="micro shrink-0 underline-offset-4 hover:underline">
-                All data work <Arrow />
+                All data exhibits <Arrow />
               </Link>
             )}
           </div>
@@ -126,7 +138,26 @@ export default async function Home() {
         </div>
       </section>
 
-      <Services />
+      {posts.length > 0 && (
+        <section className="container-x py-28 lg:py-40">
+          <div className="flex items-end justify-between gap-6">
+            <div>
+              <SectionLabel index="05">Latest thoughts</SectionLabel>
+              <Reveal as="h2" className="display mt-4 text-[length:var(--fs-h1)]">
+                Thoughts
+              </Reveal>
+            </div>
+            <Link href="/thoughts" className="micro shrink-0 underline-offset-4 hover:underline">
+              All thoughts <Arrow />
+            </Link>
+          </div>
+          <div className="mt-12">
+            <ThoughtList rows={toRows(posts).slice(0, 3)} compact />
+          </div>
+        </section>
+      )}
+
+      <Services index={posts.length > 0 ? "06" : "05"} />
     </>
   );
 }

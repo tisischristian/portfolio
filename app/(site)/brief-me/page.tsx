@@ -5,16 +5,16 @@ import { getSite } from "@/lib/site-settings";
 import { Reveal } from "@/components/motion/reveal";
 import { Arrow } from "@/components/ui/arrow";
 
-export const metadata: Metadata = { title: "Contact", description: "Start a design or data project." };
+export const metadata: Metadata = { title: "Brief Me", description: "Start a design or data project." };
 
 export default async function Contact() {
   const site = await getSite();
   return (
     <>
       <header className="container-x pt-36 pb-16 sm:pt-44">
-        <SectionLabel>Contact</SectionLabel>
+        <SectionLabel>Brief me</SectionLabel>
         <Reveal as="h1" className="display mt-6 text-[length:var(--fs-hero)]">
-          Say hello
+          Brief me
         </Reveal>
       </header>
 

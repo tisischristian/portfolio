@@ -43,6 +43,7 @@ export function SettingsForm({ initial }: { initial: SiteConfig }) {
         return { years, role, org };
       }),
       socials: s.socials.filter((x) => x.label.trim() && x.href.trim()),
+      brands: s.brands.filter((x) => x.name.trim()),
     };
     const payload = Object.fromEntries(editableKeys.map((k) => [k, value[k]]));
     start(async () => {
@@ -89,7 +90,34 @@ export function SettingsForm({ initial }: { initial: SiteConfig }) {
         </label>
       </Section>
 
-      <Section n="02" title="Portrait & CV">
+      <Section n="02" title="Home page text">
+        <Field label="Hero line" hint="The short sentence in the bottom row of the hero (shown on desktop).">
+          <textarea value={s.heroBlurb} onChange={(e) => set("heroBlurb", e.target.value)} rows={2} className={inputCls} />
+        </Field>
+        <Field
+          label="Intro statement"
+          hint="The big intro under the hero. Wrap words in *asterisks* to show them in full white; the rest is grey."
+        >
+          <textarea value={s.introStatement} onChange={(e) => set("introStatement", e.target.value)} rows={4} className={inputCls} />
+        </Field>
+        <div className="border border-line p-4 text-lg leading-snug text-muted" aria-label="Intro preview">
+          <span className="micro mb-2 block font-mono">Preview</span>
+          {s.introStatement.split(/\*([^*]+)\*/g).map((part, i) =>
+            i % 2 ? (
+              <span key={i} className="text-fg">
+                {part}
+              </span>
+            ) : (
+              part
+            ),
+          )}
+        </div>
+        <Field label="Intro paragraph" hint="The smaller paragraph next to the “More about me” button.">
+          <textarea value={s.introBody} onChange={(e) => set("introBody", e.target.value)} rows={4} className={inputCls} />
+        </Field>
+      </Section>
+
+      <Section n="03" title="Portrait & CV">
         <MediaField
           label="Hero portrait"
           url={s.portrait}
@@ -102,7 +130,7 @@ export function SettingsForm({ initial }: { initial: SiteConfig }) {
         <MediaField label="CV (PDF)" kind="pdf" url={s.cvUrl} onChange={(v) => set("cvUrl", v.url)} />
       </Section>
 
-      <Section n="03" title="Contact & social">
+      <Section n="04" title="Contact & social">
         <Field label="Contact email">
           <input type="email" value={s.email} onChange={(e) => set("email", e.target.value)} className={inputCls} />
         </Field>
@@ -136,7 +164,7 @@ export function SettingsForm({ initial }: { initial: SiteConfig }) {
         </div>
       </Section>
 
-      <Section n="04" title="About page">
+      <Section n="05" title="Manifesto page">
         <Field label="Bio" hint="Blank line between paragraphs">
           <textarea value={raw.bio} onChange={(e) => setRaw({ ...raw, bio: e.target.value })} rows={7} className={inputCls} />
         </Field>
@@ -153,10 +181,44 @@ export function SettingsForm({ initial }: { initial: SiteConfig }) {
         </Field>
       </Section>
 
-      <Section n="05" title="Home ticker">
+      <Section n="06" title="Home ticker">
         <Field label="Ticker phrases" hint="One per line — they scroll along the bottom of the hero">
           <textarea value={raw.marquee} onChange={(e) => setRaw({ ...raw, marquee: e.target.value })} rows={8} className={inputCls} />
         </Field>
+      </Section>
+
+      <Section n="07" title="Brands slider">
+        <p className="text-sm text-muted">
+          Shown as an endless slider on the home page. Upload a logo with a transparent background (SVG, PNG or WebP) — it&rsquo;s
+          turned into a black or white silhouette automatically. Without a logo, the brand name is shown instead.
+        </p>
+        <div className="space-y-3">
+          {s.brands.map((b, i) => {
+            const setB = (p: Partial<(typeof s.brands)[number]>) =>
+              set("brands", s.brands.map((x, j) => (j === i ? { ...x, ...p } : x)));
+            return (
+              <div key={i} className="grid gap-4 border border-line p-4 md:grid-cols-[1fr_1fr_auto]">
+                <div className="space-y-3">
+                  <Field label={`Brand ${i + 1} name`}>
+                    <input value={b.name} onChange={(e) => setB({ name: e.target.value })} className={inputCls} />
+                  </Field>
+                  <Field label="Website (optional)">
+                    <input type="url" value={b.href} onChange={(e) => setB({ href: e.target.value })} placeholder="https://" className={inputCls} />
+                  </Field>
+                </div>
+                <MediaField label="Logo (optional)" url={b.logo} withAlt={false} onChange={(v) => setB({ logo: v.url })} />
+                <div className="flex gap-1 md:flex-col">
+                  <button type="button" disabled={i === 0} onClick={() => { const n = [...s.brands]; [n[i - 1], n[i]] = [n[i], n[i - 1]]; set("brands", n); }} aria-label={`Move ${b.name || "brand"} up`} className={`${btnGhost} px-3`}>↑</button>
+                  <button type="button" disabled={i === s.brands.length - 1} onClick={() => { const n = [...s.brands]; [n[i + 1], n[i]] = [n[i], n[i + 1]]; set("brands", n); }} aria-label={`Move ${b.name || "brand"} down`} className={`${btnGhost} px-3`}>↓</button>
+                  <button type="button" onClick={() => set("brands", s.brands.filter((_, j) => j !== i))} aria-label={`Remove ${b.name || "brand"}`} className={`${btnGhost} px-3`}>✕</button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+        <button type="button" onClick={() => set("brands", [...s.brands, { name: "", logo: null, href: "" }])} className={btnGhost}>
+          + Add brand
+        </button>
       </Section>
     </form>
   );

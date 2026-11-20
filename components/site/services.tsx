@@ -7,13 +7,13 @@ import { Reveal } from "@/components/motion/reveal";
 import { Arrow } from "@/components/ui/arrow";
 
 /** Outlined numerals + hairline service lists (Graham reference). */
-export async function Services() {
+export async function Services({ index = "05" }: { index?: string }) {
   const [site, dataProjects] = await Promise.all([getSite(), getProjects("data")]);
   // Data analysis services read "Coming soon" until the first data project is published.
   const ready = (d: string) => d !== "data" || dataProjects.length > 0;
   return (
     <section className="container-x py-28 lg:py-40">
-      <SectionLabel index="04">Services</SectionLabel>
+      <SectionLabel index={index}>Services</SectionLabel>
       <div className="mt-12 space-y-24 lg:space-y-32">
         {site.services.map((s) => (
           <div key={s.n} className="grid gap-8 lg:grid-cols-12">
@@ -47,7 +47,7 @@ export async function Services() {
                     data-magnetic
                     className="micro mt-8 inline-flex h-11 items-center gap-2 rounded-full border border-line-strong px-5 transition-colors hover:bg-fg hover:text-bg"
                   >
-                    See {s.discipline} work <Arrow />
+                    See {s.discipline} exhibits <Arrow />
                   </Link>
                 </>
               )}
