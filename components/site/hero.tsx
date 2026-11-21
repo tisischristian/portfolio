@@ -63,13 +63,13 @@ export async function Hero() {
         {/* Portrait: anchored to the whole hero (above the ticker), between the solid name (z-0)
             and the outlined name + UI text (z-20). */}
         {site.portrait && (
-          <div className="pointer-events-none absolute right-0 bottom-0 z-10 h-[72%] w-[min(92%,1100px)] max-lg:[mask-image:linear-gradient(to_bottom,#000_62%,transparent_94%)] sm:h-[88%] lg:right-[3%] lg:h-[96%] lg:w-[min(62%,1100px)]">
+          <div className="pointer-events-none absolute right-0 bottom-0 z-10 hidden h-[88%] w-[min(92%,1100px)] max-lg:[mask-image:linear-gradient(to_bottom,#000_62%,transparent_94%)] sm:block lg:right-[3%] lg:h-[96%] lg:w-[min(62%,1100px)]">
             <Image
               src={site.portrait}
               alt=""
               fill
               priority
-              sizes="(min-width:1024px) 62vw, 92vw"
+              sizes="(min-width:1024px) 62vw, (min-width:640px) 92vw, 1px"
               className="object-contain object-bottom grayscale"
             />
           </div>
@@ -83,7 +83,19 @@ export async function Hero() {
           <CircleBadge site={site} />
         </div>
 
-        <div className="relative mt-auto pt-10">
+        {/* Phone: the photo sits in the flow, edge to edge and as tall as the screen allows, so it's as
+            big as on desktop without running behind the role line, badge or bottom info. The name is
+            pulled up over its lower part for the same layered effect (solid name behind, 75% copy in front). */}
+        {site.portrait && (
+          <div
+            className="pointer-events-none relative z-10 -mx-[var(--margin)] mt-6 [mask-image:linear-gradient(to_bottom,#000_80%,transparent)] sm:hidden"
+            style={{ height: "min(133vw, 64svh)" }}
+          >
+            <Image src={site.portrait} alt="" fill priority sizes="(min-width:640px) 1px, 130vw" className="object-cover object-bottom grayscale" />
+          </div>
+        )}
+
+        <div className={`relative mt-auto pt-10 ${site.portrait ? "max-sm:mt-[-34vw] max-sm:pt-0" : ""}`}>
           <div className="relative z-0">
             <Name />
           </div>
