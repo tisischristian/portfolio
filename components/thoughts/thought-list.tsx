@@ -69,7 +69,7 @@ export function ThoughtList({ rows, compact = false }: { rows: ThoughtRow[]; com
                         <span>
                           {r.topicLabel} · {r.minutes} min read
                         </span>
-                        <span className="text-fg transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1">
+                        <span className="text-fg transition-[transform,color] duration-500 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-accent-text">
                           <Arrow />
                         </span>
                       </span>

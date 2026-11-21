@@ -127,7 +127,7 @@ export function ProjectForm({ initial, justSaved }: { initial: EditableProject; 
     >
       {/* Sticky action bar */}
       <div className="sticky top-14 z-30 -mx-4 mb-2 flex flex-wrap items-center gap-3 border-b border-line bg-bg/90 px-4 py-3 backdrop-blur sm:-mx-8 sm:px-8 lg:top-0 lg:-mx-12 lg:px-12">
-        <Link href="/admin/projects" className="micro text-muted hover:text-fg">
+        <Link href="/admin/projects" className="micro text-muted hover:text-accent-text">
           ← Projects
         </Link>
         <Badge>{isDesign ? "■ Design" : "□ Data"}</Badge>
@@ -258,7 +258,7 @@ export function ProjectForm({ initial, justSaved }: { initial: EditableProject; 
                     aria-label={`Colour ${i + 1} hex`}
                     className="w-20 bg-transparent font-mono text-xs outline-none"
                   />
-                  <button type="button" onClick={() => set("palette", (p.palette ?? []).filter((_, j) => j !== i))} aria-label={`Remove colour ${i + 1}`} className="px-1 text-muted hover:text-fg">
+                  <button type="button" onClick={() => set("palette", (p.palette ?? []).filter((_, j) => j !== i))} aria-label={`Remove colour ${i + 1}`} className="px-1 text-muted hover:text-accent-text">
                     ✕
                   </button>
                 </div>
@@ -294,7 +294,7 @@ export function ProjectForm({ initial, justSaved }: { initial: EditableProject; 
                 key={t}
                 type="button"
                 onClick={() => (setRaw({ ...raw, tools: [...list(raw.tools), t].join(", ") }), setDirty(true))}
-                className="micro h-7 rounded-full border border-line px-2.5 font-mono text-muted hover:border-fg hover:text-fg"
+                className="micro h-7 rounded-full border border-line px-2.5 font-mono text-muted hover:border-accent hover:text-accent-text"
               >
                 + {t}
               </button>

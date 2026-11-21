@@ -49,14 +49,14 @@ export default async function About() {
               <a
                 href={site.cvUrl}
                 download
-                className="micro inline-flex h-11 items-center rounded-full bg-fg px-5 text-bg transition-opacity hover:opacity-80"
+                className="micro inline-flex h-11 items-center rounded-full bg-fg px-5 text-bg transition-colors hover:bg-accent hover:text-ink"
               >
                 Download CV <Arrow rotate={135} />
               </a>
             )}
             <Link
               href="/brief-me"
-              className="micro inline-flex h-11 items-center rounded-full border border-line-strong px-5 transition-colors hover:bg-fg hover:text-bg"
+              className="micro inline-flex h-11 items-center rounded-full border border-line-strong px-5 transition-colors hover:border-accent hover:bg-accent hover:text-ink"
             >
               {CTA_LABEL} <Arrow />
             </Link>

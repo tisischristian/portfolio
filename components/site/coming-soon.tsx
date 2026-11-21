@@ -12,7 +12,10 @@ export function ComingSoon({
 }) {
   return (
     <div className={`border-t border-line pt-6 ${className}`}>
-      <p className="micro font-mono text-muted">{`// ${label}`}</p>
+      <p className="micro font-mono text-muted">
+        <span className="text-accent-text">{"// "}</span>
+        {label}
+      </p>
       <p className={`display mt-4 ${size === "lg" ? "text-[length:var(--fs-h1)]" : "text-[length:var(--fs-h2)]"}`}>
         Coming soon
       </p>

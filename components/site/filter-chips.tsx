@@ -22,7 +22,7 @@ export function FilterChips({
             aria-pressed={active}
             onClick={() => onChange(o)}
             className={`micro h-9 rounded-full border px-4 transition-colors ${
-              active ? "border-fg bg-fg text-bg" : "border-line-strong hover:border-fg"
+              active ? "border-accent bg-accent text-ink" : "border-line-strong hover:border-accent hover:text-accent-text"
             }`}
           >
             {o}

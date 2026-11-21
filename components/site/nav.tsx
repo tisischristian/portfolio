@@ -62,7 +62,7 @@ export function Nav({ discipline }: { discipline: Discipline | null }) {
                     <Link
                       href={l.href}
                       aria-current={isCurrent(pathname, l.match) ? "page" : undefined}
-                      className="micro underline-offset-4 hover:underline aria-[current=page]:underline"
+                      className="micro underline-offset-4 hover:underline aria-[current=page]:text-accent-text aria-[current=page]:underline"
                     >
                       {l.label}
                     </Link>
@@ -73,7 +73,7 @@ export function Nav({ discipline }: { discipline: Discipline | null }) {
               <Link
                 href="/brief-me"
                 data-magnetic
-                className="micro ml-1 hidden h-10 items-center gap-2 rounded-full bg-fg px-4 text-bg transition-opacity hover:opacity-80 md:inline-flex"
+                className="micro ml-1 hidden h-10 items-center gap-2 rounded-full bg-fg px-4 text-bg transition-colors hover:bg-accent hover:text-ink md:inline-flex"
               >
                 {CTA_LABEL} <Arrow />
               </Link>
@@ -83,7 +83,7 @@ export function Nav({ discipline }: { discipline: Discipline | null }) {
                 aria-expanded={open}
                 aria-controls="menu"
                 aria-label={open ? "Close menu" : "Open menu"}
-                className="relative grid size-10 place-items-center rounded-full hover:bg-line lg:hidden"
+                className="relative grid size-10 place-items-center rounded-full hover:bg-accent/15 hover:text-accent-text lg:hidden"
               >
                 <span
                   className={`absolute h-px w-5 bg-current transition-transform duration-300 ${open ? "rotate-45" : "-translate-y-1"}`}
@@ -98,17 +98,23 @@ export function Nav({ discipline }: { discipline: Discipline | null }) {
       </header>
 
       {/* Full-screen mobile / tablet menu */}
-      <div id="menu" hidden={!open} className="fixed inset-0 z-40 flex flex-col bg-bg pt-28 pb-28 lg:hidden">
-        <nav aria-label="Main" className="container-x flex flex-1 flex-col justify-center">
+      <div
+        id="menu"
+        hidden={!open}
+        data-lenis-prevent
+        className="fixed inset-0 z-40 flex flex-col overflow-y-auto overscroll-contain bg-bg pt-28 pb-28 lg:hidden [@media(max-height:560px)]:pt-24 [@media(max-height:560px)]:pb-20"
+      >
+        {/* Scrollable so the whole menu is reachable on short screens (e.g. a phone in landscape). */}
+        <nav aria-label="Main" className="container-x flex flex-1 shrink-0 flex-col justify-center">
           <ol className="divide-y divide-line border-y border-line">
             {nav.map((l, i) => (
               <li key={l.href}>
                 <Link
                   href={l.href}
-                  className="flex items-baseline justify-between py-4"
+                  className="flex items-baseline justify-between py-4 transition-colors hover:text-accent-text aria-[current=page]:text-accent-text [@media(max-height:560px)]:py-2"
                   aria-current={isCurrent(pathname, l.match) ? "page" : undefined}
                 >
-                  <span className="display text-[clamp(2.5rem,12vw,5rem)]">{l.label}</span>
+                  <span className="display text-[clamp(2.25rem,min(12vw,13svh),5rem)]">{l.label}</span>
                   <span className="font-mono text-sm text-muted">0{i + 1}</span>
                 </Link>
               </li>

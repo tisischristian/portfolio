@@ -9,7 +9,7 @@ export function SectionLabel({
 }) {
   return (
     <p className={`micro font-mono text-muted ${className}`}>
-      {"// "}
+      <span className="text-accent-text">{"// "}</span>
       {index ? `${index} — ` : ""}
       {children}
     </p>

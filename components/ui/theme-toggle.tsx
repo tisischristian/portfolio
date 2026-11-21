@@ -34,7 +34,7 @@ export function ThemeToggle({ className = "", withLabel = false }: { className?:
       onClick={toggle}
       aria-label={label}
       title={label}
-      className={`micro inline-flex h-10 items-center gap-2 rounded-full transition-colors hover:bg-line ${
+      className={`micro inline-flex h-10 items-center gap-2 rounded-full transition-colors hover:bg-accent/15 hover:text-accent-text ${
         withLabel ? "px-3" : "w-10 justify-center"
       } ${className}`}
     >

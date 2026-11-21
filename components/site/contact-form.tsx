@@ -5,7 +5,7 @@ import { sendMessage, type ContactState } from "@/app/(site)/brief-me/actions";
 import { Arrow } from "@/components/ui/arrow";
 
 const field =
-  "peer w-full border-b border-line-strong bg-transparent pt-7 pb-3 text-lg outline-none transition-colors placeholder:text-transparent focus:border-fg aria-[invalid=true]:border-fg";
+  "peer w-full border-b border-line-strong bg-transparent pt-7 pb-3 text-lg outline-none transition-colors placeholder:text-transparent focus:border-accent aria-[invalid=true]:border-accent";
 const lbl =
   "micro pointer-events-none absolute top-1 left-0 text-muted transition-colors peer-focus:text-fg";
 
@@ -67,7 +67,7 @@ export function ContactForm() {
           ].map(([value, l], i) => (
             <label key={value} className="cursor-pointer">
               <input type="radio" name="interest" value={value} defaultChecked={v.interest ? v.interest === value : i === 0} className="peer sr-only" />
-              <span className="micro inline-flex h-10 items-center rounded-full border border-line-strong px-5 transition-colors peer-checked:border-fg peer-checked:bg-fg peer-checked:text-bg peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-fg">
+              <span className="micro inline-flex h-10 items-center rounded-full border border-line-strong px-5 transition-colors peer-checked:border-accent peer-checked:bg-accent peer-checked:text-ink peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-fg">
                 {l}
               </span>
             </label>
@@ -101,7 +101,7 @@ export function ContactForm() {
           type="submit"
           data-magnetic
           disabled={pending}
-          className="micro inline-flex h-14 items-center gap-3 rounded-full bg-fg px-8 text-bg transition-opacity hover:opacity-80 disabled:opacity-50"
+          className="micro inline-flex h-14 items-center gap-3 rounded-full bg-fg px-8 text-bg transition-colors hover:bg-accent hover:text-ink disabled:opacity-50"
         >
           {pending ? "Sending…" : <>Send message <Arrow /></>}
         </button>

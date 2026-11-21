@@ -44,6 +44,9 @@
   --ph-bg: #151514;
   --ph-fg: #f4f4f2;
   --ph-mid: #40403e;
+  /* Signal orange, used sparingly: hovers, small labels, status dots. */
+  --accent: #ff5a1f;
+  --accent-text: #ff5a1f; /* 6.6:1 on black */
 }
 [data-theme="paper"] {
   color-scheme: light;
@@ -55,6 +58,8 @@
   --ph-bg: #ededec;
   --ph-fg: #060606;
   --ph-mid: #9f9f9f;
+  --accent: #ff5a1f;
+  --accent-text: #c8410b; /* deeper so small orange text stays readable on white (5:1) */
 }
 
 @theme inline {
@@ -67,6 +72,8 @@
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
 
   --breakpoint-xs: 380px;
 }
@@ -97,12 +104,17 @@ body {
 }
 
 ::selection {
-  background: var(--fg);
-  color: var(--bg);
+  background: var(--accent);
+  color: var(--ink);
+}
+
+/* Underlined links pick up the accent on hover. */
+a:hover {
+  text-decoration-color: var(--accent);
 }
 
 :focus-visible {
-  outline: 2px solid var(--fg);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
 }
 

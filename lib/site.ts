@@ -95,7 +95,7 @@ export const nav = [
   { label: "Exhibits", href: "/design", match: ["/design", "/data"] },
   { label: "Thoughts", href: "/thoughts", match: ["/thoughts"] },
   { label: "Manifesto", href: "/manifesto", match: ["/manifesto"] },
-  { label: "Brief Me", href: "/brief-me", match: ["/brief-me"] },
 ] as const;
 
-export const CTA_LABEL = "Let’s Have Coffee";
+/** Main call-to-action button (nav, mobile menu, Manifesto). Links to the /brief-me page. */
+export const CTA_LABEL = "Brief Me";

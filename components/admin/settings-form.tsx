@@ -153,7 +153,7 @@ export function SettingsForm({ initial }: { initial: SiteConfig }) {
                 aria-label={`Link ${i + 1} URL`}
                 className={inputCls}
               />
-              <button type="button" onClick={() => set("socials", s.socials.filter((_, j) => j !== i))} aria-label={`Remove link ${i + 1}`} className="px-3 text-muted hover:text-fg">
+              <button type="button" onClick={() => set("socials", s.socials.filter((_, j) => j !== i))} aria-label={`Remove link ${i + 1}`} className="px-3 text-muted hover:text-accent-text">
                 ✕
               </button>
             </div>

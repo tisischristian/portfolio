@@ -16,7 +16,7 @@ export function DisciplineSwitch({
         href={`/${d}`}
         aria-current={isActive ? "page" : undefined}
         className={`micro flex h-8 items-center rounded-full px-3.5 transition-colors ${
-          isActive ? "bg-fg text-bg" : "text-fg hover:bg-line"
+          isActive ? "bg-accent text-ink" : "text-fg hover:text-accent-text"
         }`}
       >
         {label}

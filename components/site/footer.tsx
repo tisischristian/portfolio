@@ -31,7 +31,7 @@ export function Footer() {
           Let&rsquo;s talk
           <span
             aria-hidden
-            className="text-[0.5em] transition-transform duration-500 group-hover:translate-x-2 group-hover:-translate-y-2"
+            className="text-[0.5em] transition-[transform,color] duration-500 group-hover:translate-x-2 group-hover:-translate-y-2 group-hover:text-accent-text"
           >
             <ArrowCircle />
           </span>
@@ -50,7 +50,7 @@ export function Footer() {
             <ul className="space-y-1">
               {site.socials.map((s) => (
                 <li key={s.label}>
-                  <a href={s.href} className="inline-flex min-h-6 items-center gap-1 hover:underline">
+                  <a href={s.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-6 items-center gap-1 hover:underline">
                     {s.label} <Arrow />
                   </a>
                 </li>
@@ -66,7 +66,7 @@ export function Footer() {
             <p className="inline-flex items-center gap-2">
               <span
                 aria-hidden
-                className={`size-2 rounded-full ${site.available ? "bg-fg" : "border border-current"}`}
+                className={`size-2 rounded-full ${site.available ? "bg-accent" : "border border-current"}`}
               />
               {site.available ? "Available for work" : "Booked"}
             </p>

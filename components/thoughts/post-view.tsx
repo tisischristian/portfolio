@@ -91,7 +91,7 @@ export function PostView({ post, newer, older }: { post: Post; newer?: Post | nu
       )}
 
       <div className="container-x mt-16">
-        <Link href="/thoughts" className="micro inline-flex h-11 items-center gap-2 rounded-full border border-line-strong px-5 transition-colors hover:bg-fg hover:text-bg">
+        <Link href="/thoughts" className="micro inline-flex h-11 items-center gap-2 rounded-full border border-line-strong px-5 transition-colors hover:border-accent hover:bg-accent hover:text-ink">
           All thoughts <Arrow />
         </Link>
       </div>

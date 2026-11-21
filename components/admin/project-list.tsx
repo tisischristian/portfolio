@@ -21,7 +21,7 @@ type Row = {
 };
 
 const tabCls = (on: boolean) =>
-  `micro h-9 rounded-full px-4 transition-colors ${on ? "bg-fg text-bg" : "border border-line-strong hover:border-fg"}`;
+  `micro h-9 rounded-full px-4 transition-colors ${on ? "bg-accent text-ink" : "border border-line-strong hover:border-accent hover:text-accent-text"}`;
 
 export function ProjectList({ projects }: { projects: Row[] }) {
   const [rows, setRows] = useState(projects);
@@ -71,7 +71,7 @@ export function ProjectList({ projects }: { projects: Row[] }) {
               type="button"
               aria-pressed={status === s}
               onClick={() => setStatus(s)}
-              className={status === s ? "underline underline-offset-4" : "text-muted hover:text-fg"}
+              className={status === s ? "text-accent-text underline underline-offset-4" : "text-muted hover:text-accent-text"}
             >
               [{s}]
             </button>
@@ -86,7 +86,7 @@ export function ProjectList({ projects }: { projects: Row[] }) {
       {list.length === 0 ? (
         <div className="mt-4 border border-line p-10 text-center">
           <p className="text-muted">No {status === "all" ? "" : status} {discipline} projects yet.</p>
-          <Link href={`/admin/projects/new?discipline=${discipline}`} className="micro mt-6 inline-flex h-10 items-center rounded-full bg-fg px-5 text-bg">
+          <Link href={`/admin/projects/new?discipline=${discipline}`} className="micro mt-6 inline-flex h-10 items-center rounded-full bg-fg px-5 text-bg transition-colors hover:bg-accent hover:text-ink">
             + Add a {discipline} project
           </Link>
         </div>
@@ -116,7 +116,7 @@ export function ProjectList({ projects }: { projects: Row[] }) {
                     patch(r.id, { featured: !r.featured });
                     run(() => setProjectFlags(r.id, { featured: !r.featured }), r.featured ? "Removed from home." : "Featured on home.");
                   }}
-                  className="grid size-9 place-items-center rounded-full text-lg hover:bg-line"
+                  className="grid size-9 place-items-center rounded-full text-lg hover:bg-accent/15 hover:text-accent-text"
                 >
                   <span aria-hidden>{r.featured ? "★" : "☆"}</span>
                   <span className="sr-only">Featured</span>
@@ -133,18 +133,18 @@ export function ProjectList({ projects }: { projects: Row[] }) {
                   <Badge solid={r.status === "published"}>{r.status}</Badge>
                 </button>
                 <details className="relative">
-                  <summary className="grid size-9 cursor-pointer list-none place-items-center rounded-full hover:bg-line" aria-label={`More actions for ${r.title}`}>
+                  <summary className="grid size-9 cursor-pointer list-none place-items-center rounded-full hover:bg-accent/15 hover:text-accent-text" aria-label={`More actions for ${r.title}`}>
                     ⋯
                   </summary>
                   <div className="micro absolute right-0 z-20 mt-1 w-44 border border-line-strong bg-bg py-1">
-                    <Link href={`/admin/projects/${r.id}`} className="block px-4 py-2 hover:bg-line">Edit</Link>
-                    <Link href={`/preview/${r.id}`} target="_blank" className="block px-4 py-2 hover:bg-line">Preview <Arrow /></Link>
+                    <Link href={`/admin/projects/${r.id}`} className="block px-4 py-2 hover:bg-accent/15 hover:text-accent-text">Edit</Link>
+                    <Link href={`/preview/${r.id}`} target="_blank" className="block px-4 py-2 hover:bg-accent/15 hover:text-accent-text">Preview <Arrow /></Link>
                     {r.status === "published" && (
-                      <Link href={`/${r.discipline}/${r.slug}`} target="_blank" className="block px-4 py-2 hover:bg-line">View live <Arrow /></Link>
+                      <Link href={`/${r.discipline}/${r.slug}`} target="_blank" className="block px-4 py-2 hover:bg-accent/15 hover:text-accent-text">View live <Arrow /></Link>
                     )}
                     <button
                       type="button"
-                      className="block w-full px-4 py-2 text-left hover:bg-fg hover:text-bg"
+                      className="block w-full px-4 py-2 text-left hover:border-accent hover:bg-accent hover:text-ink"
                       onClick={() => {
                         if (!confirm(`Delete “${r.title}” permanently? This can't be undone.`)) return;
                         setRows((rs) => rs.filter((x) => x.id !== r.id));

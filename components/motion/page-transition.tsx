@@ -31,11 +31,20 @@ export function PageTransition() {
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      if (prefersReduced() || covering.current) return;
       const a = (e.target as HTMLElement | null)?.closest("a");
       if (!a || a.target === "_blank" || a.hasAttribute("download")) return;
       const url = new URL(a.href, location.href);
+
+      // Links to other websites (socials, brands, links inside your writing) open in a new tab by default.
+      // mailto:/tel: and same-site links are left alone.
+      if (/^https?:$/.test(url.protocol) && url.origin !== location.origin) {
+        e.preventDefault();
+        window.open(url.href, "_blank", "noopener,noreferrer");
+        return;
+      }
       if (url.origin !== location.origin) return;
+
+      if (prefersReduced() || covering.current) return;
       if (url.pathname.startsWith("/admin") || url.pathname.startsWith("/preview")) return;
       if (url.pathname === location.pathname) return; // same page / hash links: let the browser handle it
 

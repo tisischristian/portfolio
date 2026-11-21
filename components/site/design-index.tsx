@@ -46,7 +46,7 @@ export function DesignIndex({ projects, categories }: { projects: Project[]; cat
               type="button"
               aria-pressed={view === v}
               onClick={() => changeView(v)}
-              className={`underline-offset-4 ${view === v ? "underline" : "text-muted hover:text-fg"}`}
+              className={`underline-offset-4 ${view === v ? "text-accent-text underline" : "text-muted hover:text-accent-text"}`}
             >
               [{v}]
             </button>

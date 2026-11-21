@@ -65,7 +65,7 @@ export function Marquee({
       {items.map((t, i) => (
         <li key={i} className={`flex items-center whitespace-nowrap ${gapClass.split(" ")[0]}`}>
           {t}
-          {separator && <span aria-hidden className="size-1.5 bg-current" />}
+          {separator && <span aria-hidden className="size-1.5 bg-accent" />}
         </li>
       ))}
     </ul>

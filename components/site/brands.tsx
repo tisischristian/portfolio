@@ -23,7 +23,7 @@ export async function Brands({ index = "02" }: { index?: string }) {
         className="brand-logo h-9 w-auto max-w-[180px] object-contain opacity-70 transition-opacity duration-300 group-hover:opacity-100 sm:h-12"
       />
     ) : (
-      <span className="display text-[clamp(2rem,5vw,3.75rem)] text-muted transition-colors duration-300 group-hover:text-fg">
+      <span className="display text-[clamp(2rem,5vw,3.75rem)] text-muted transition-colors duration-300 group-hover:text-accent-text">
         {b.name}
       </span>
     );

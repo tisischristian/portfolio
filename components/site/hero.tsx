@@ -19,7 +19,7 @@ function CircleBadge({ site }: { site: SiteConfig }) {
         </text>
       </svg>
       <span className="absolute inset-0 m-auto grid size-8 place-items-center rounded-full border-[3px] border-current">
-        <span className="size-2 rounded-full bg-current" />
+        <span className="size-2 rounded-full bg-accent" />
       </span>
     </div>
   );
@@ -27,7 +27,7 @@ function CircleBadge({ site }: { site: SiteConfig }) {
 
 /**
  * Home hero: visible grid (Kalathia), giant name, optional portrait layered between
- * a solid and an outlined copy of the name (Graham), grain + bottom ticker (Howat).
+ * a solid and a translucent copy of the name (Graham), grain + bottom ticker (Howat).
  */
 export async function Hero() {
   const site = await getSite();
@@ -37,12 +37,15 @@ export async function Hero() {
   // indented lines get 1/6 less room).
   const longest = Math.max(...words.map((w, i) => w.length * (i % 2 ? 1.2 : 1)), 4);
   const fontSize = `min(clamp(4rem, 22vw, 13rem), calc((min(100vw, var(--max) + 2 * var(--margin)) - 2 * var(--margin)) / ${(longest * 0.48).toFixed(2)}))`;
-  const Name = ({ outline = false }: { outline?: boolean }) => (
+  // `overlay` = the copy that sits ON TOP of the portrait (Alex Graham reference): a solid fill in the
+  // theme's text colour at 75%, so a little of the photo shows through where they overlap. Off the photo it
+  // lands on the solid name underneath, so those letters still read as fully solid.
+  const Name = ({ overlay = false }: { overlay?: boolean }) => (
     <Reveal
-      as="h1"
-      aria-hidden={outline || undefined}
+      as={overlay ? "p" : "h1"}
+      aria-hidden={overlay || undefined}
       style={{ fontSize }}
-      className={`display ${outline ? "text-outline" : ""}`}
+      className={`display ${overlay ? "text-fg/75" : ""}`}
     >
       {words.map((w, i) => (
         <span key={i} className={`block ${i % 2 ? "lg:pl-[16.66%]" : ""}`}>
@@ -86,7 +89,7 @@ export async function Hero() {
           </div>
           {site.portrait && (
             <div className="absolute inset-x-0 bottom-0 z-20">
-              <Name outline />
+              <Name overlay />
             </div>
           )}
         </div>

@@ -98,7 +98,7 @@ export function PostForm({ initial, justSaved }: { initial: EditablePost; justSa
       }}
     >
       <div className="sticky top-14 z-30 -mx-4 mb-2 flex flex-wrap items-center gap-3 border-b border-line bg-bg/90 px-4 py-3 backdrop-blur sm:-mx-8 sm:px-8 lg:top-0 lg:-mx-12 lg:px-12">
-        <Link href="/admin/thoughts" className="micro text-muted hover:text-fg">
+        <Link href="/admin/thoughts" className="micro text-muted hover:text-accent-text">
           ← Thoughts
         </Link>
         <Badge solid={p.status === "published"}>{p.status}</Badge>

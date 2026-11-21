@@ -32,7 +32,7 @@ export function DesignCard({
       />
       <div className="mt-4 flex items-baseline justify-between gap-4">
         <h3 className="text-lg font-medium tracking-tight sm:text-xl">
-          <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 group-hover:bg-[length:100%_1px]">
+          <span className="bg-[linear-gradient(var(--accent),var(--accent))] bg-[length:0%_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 group-hover:bg-[length:100%_1px]">
             {p.title}
           </span>
         </h3>
@@ -54,7 +54,7 @@ export function DataCard({ p, sizes }: { p: Project; sizes?: string }) {
     <Link
       href={`/data/${p.slug}`}
       data-cursor="View"
-      className="group flex h-full flex-col border-r border-b border-line p-5 transition-colors duration-500 hover:bg-fg hover:text-bg sm:p-6"
+      className="group flex h-full flex-col border-r border-b border-line p-5 transition-colors duration-500 hover:border-accent hover:bg-accent hover:text-ink sm:p-6"
     >
       <div className="micro flex justify-between font-mono">
         <span>[{p.category}]</span>

@@ -40,7 +40,7 @@ export function SplitEntry({ design, data }: { design?: Project; data?: Project 
             <Link
               href={r.href}
               data-cursor="Open"
-              className="group block border-b border-line transition-colors duration-500 hover:bg-fg hover:text-bg focus-visible:bg-fg focus-visible:text-bg"
+              className="group block border-b border-line transition-colors duration-500 hover:border-accent hover:bg-accent hover:text-ink focus-visible:bg-accent focus-visible:text-ink"
             >
               <div className="container-x flex items-center gap-4 py-8 sm:gap-8 sm:py-14">
                 <span className="font-mono text-sm text-muted transition-colors group-hover:text-current">{r.n}</span>

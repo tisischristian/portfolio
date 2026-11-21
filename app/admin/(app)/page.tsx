@@ -57,7 +57,7 @@ export default async function Dashboard() {
           <ul className="border-t border-line">
             {list.slice(0, 6).map((p) => (
               <li key={p.id}>
-                <Link href={`/admin/projects/${p.id}`} className="flex items-center gap-3 border-b border-line py-3.5 hover:bg-line">
+                <Link href={`/admin/projects/${p.id}`} className="flex items-center gap-3 border-b border-line py-3.5 hover:bg-accent/15 hover:text-accent-text">
                   <span aria-hidden className="w-4 text-center">{p.discipline === "design" ? "■" : "□"}</span>
                   <span className="flex-1 truncate">{p.title}</span>
                   <Badge solid={p.status === "published"}>{p.status}</Badge>
@@ -72,8 +72,8 @@ export default async function Dashboard() {
           <ul className="border-t border-line">
             {(messages ?? []).map((m) => (
               <li key={m.id}>
-                <Link href="/admin/messages" className="flex items-center gap-3 border-b border-line py-3.5 hover:bg-line">
-                  <span aria-hidden className={`size-2 rounded-full ${m.read ? "border border-current" : "bg-fg"}`} />
+                <Link href="/admin/messages" className="flex items-center gap-3 border-b border-line py-3.5 hover:bg-accent/15 hover:text-accent-text">
+                  <span aria-hidden className={`size-2 rounded-full ${m.read ? "border border-current" : "bg-accent"}`} />
                   <span className="flex-1 truncate">{m.name}</span>
                   <Badge>{m.interest ?? "—"}</Badge>
                   <span className="font-mono text-xs text-muted">{new Date(m.created_at).toLocaleDateString()}</span>

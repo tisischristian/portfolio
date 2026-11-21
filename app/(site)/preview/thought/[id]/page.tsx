@@ -25,7 +25,7 @@ export default async function PreviewThought({ params }: Props) {
       <div className="micro fixed inset-x-0 bottom-20 z-50 flex justify-center px-4 sm:bottom-6">
         <div className="flex items-center gap-4 rounded-full bg-fg py-2 pr-2 pl-5 text-bg shadow-lg">
           <span className="font-mono">Preview · {post.status === "draft" ? "Draft — not public" : "Published"}</span>
-          <Link href={`/admin/thoughts/${post.id}`} className="rounded-full border border-current px-3 py-1.5 hover:bg-bg hover:text-fg">
+          <Link href={`/admin/thoughts/${post.id}`} className="rounded-full border border-current px-3 py-1.5 transition-colors hover:border-accent hover:bg-accent hover:text-ink">
             <Arrow rotate={-135} /> Back to editor
           </Link>
         </div>

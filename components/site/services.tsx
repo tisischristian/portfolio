@@ -45,7 +45,7 @@ export async function Services({ index = "05" }: { index?: string }) {
                   <Link
                     href={`/${s.discipline}`}
                     data-magnetic
-                    className="micro mt-8 inline-flex h-11 items-center gap-2 rounded-full border border-line-strong px-5 transition-colors hover:bg-fg hover:text-bg"
+                    className="micro mt-8 inline-flex h-11 items-center gap-2 rounded-full border border-line-strong px-5 transition-colors hover:border-accent hover:bg-accent hover:text-ink"
                   >
                     See {s.discipline} exhibits <Arrow />
                   </Link>

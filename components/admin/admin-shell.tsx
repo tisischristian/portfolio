@@ -38,12 +38,12 @@ export function AdminShell({
           key={l.href}
           href={l.href}
           aria-current={active(l.href) ? "page" : undefined}
-          className="micro flex h-10 items-center gap-3 rounded-full px-4 transition-colors hover:bg-line aria-[current=page]:bg-fg aria-[current=page]:text-bg"
+          className="micro flex h-10 items-center gap-3 rounded-full px-4 transition-colors hover:bg-accent/15 hover:text-accent-text aria-[current=page]:bg-accent aria-[current=page]:text-ink"
         >
           <span className="font-mono opacity-60">{l.n}</span>
           {l.label}
           {l.href === "/admin/messages" && unread > 0 && (
-            <span className="ml-auto font-mono">[{unread}]</span>
+            <span className="ml-auto font-mono text-accent-text">[{unread}]</span>
           )}
         </Link>
       ))}
@@ -60,7 +60,7 @@ export function AdminShell({
       </p>
       <div className="flex items-center justify-between">
         <form action={signOut}>
-          <button className="text-muted hover:text-fg hover:underline">Sign out</button>
+          <button className="text-muted hover:text-accent-text hover:underline">Sign out</button>
         </form>
         <ThemeToggle className="-mr-2" />
       </div>

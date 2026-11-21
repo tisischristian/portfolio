@@ -188,7 +188,7 @@ function BlockFields({ b, set, altErrors }: { b: Block; set: (p: Partial<Block>)
             {b.images.map((im, i) => (
               <div key={i} className="space-y-2 border border-line p-3">
                 <MediaField label={`Image ${i + 1}`} url={im.url} alt={im.alt} altError={altErrors && !!im.url && !im.alt?.trim()} onChange={(v) => setImg(i, { url: v.url, alt: v.alt ?? im.alt })} />
-                <button type="button" onClick={() => s({ images: b.images.filter((_, j) => j !== i) })} className="micro text-muted hover:text-fg hover:underline">
+                <button type="button" onClick={() => s({ images: b.images.filter((_, j) => j !== i) })} className="micro text-muted hover:text-accent-text hover:underline">
                   Remove image
                 </button>
               </div>
@@ -274,7 +274,7 @@ export function MetricsEditor({
         <div key={i} className="flex gap-2">
           <input value={m.value} onChange={(e) => setAt(i, { value: e.target.value })} placeholder="−23%" aria-label={`Metric ${i + 1} value`} className={`${inputCls} w-32 font-mono`} />
           <input value={m.label} onChange={(e) => setAt(i, { label: e.target.value })} placeholder="Churn reduction" aria-label={`Metric ${i + 1} label`} className={inputCls} />
-          <button type="button" onClick={() => onChange(items.filter((_, j) => j !== i))} aria-label={`Remove metric ${i + 1}`} className="px-3 text-muted hover:text-fg">
+          <button type="button" onClick={() => onChange(items.filter((_, j) => j !== i))} aria-label={`Remove metric ${i + 1}`} className="px-3 text-muted hover:text-accent-text">
             ✕
           </button>
         </div>
@@ -325,19 +325,19 @@ export function BlockEditor({
                   {String(i + 1).padStart(2, "0")} — {LABELS[b.type]}
                 </span>
                 <div className="micro ml-auto flex items-center">
-                  <button type="button" onClick={() => move(i, -1)} disabled={i === 0} aria-label="Move up" className="size-8 rounded-full hover:bg-line disabled:opacity-30">↑</button>
-                  <button type="button" onClick={() => move(i, 1)} disabled={i === blocks.length - 1} aria-label="Move down" className="size-8 rounded-full hover:bg-line disabled:opacity-30">↓</button>
+                  <button type="button" onClick={() => move(i, -1)} disabled={i === 0} aria-label="Move up" className="size-8 rounded-full hover:bg-accent/15 hover:text-accent-text disabled:opacity-30">↑</button>
+                  <button type="button" onClick={() => move(i, 1)} disabled={i === blocks.length - 1} aria-label="Move down" className="size-8 rounded-full hover:bg-accent/15 hover:text-accent-text disabled:opacity-30">↓</button>
                   <button
                     type="button"
                     onClick={() => onChange([...blocks.slice(0, i + 1), { ...structuredClone(stripKeys([b])[0]), _k: newKey() } as KeyedBlock, ...blocks.slice(i + 1)])}
-                    className="h-8 rounded-full px-3 hover:bg-line"
+                    className="h-8 rounded-full px-3 hover:bg-accent/15 hover:text-accent-text"
                   >
                     Duplicate
                   </button>
                   <button
                     type="button"
                     onClick={() => confirm(`Remove this ${LABELS[b.type].toLowerCase()} block?`) && onChange(blocks.filter((x) => x._k !== b._k))}
-                    className="h-8 rounded-full px-3 hover:bg-fg hover:text-bg"
+                    className="h-8 rounded-full px-3 hover:border-accent hover:bg-accent hover:text-ink"
                   >
                     Remove
                   </button>
@@ -369,7 +369,7 @@ export function BlockEditor({
                   {LABELS[t]}
                 </button>
               ))}
-              <button type="button" onClick={() => setAdding(false)} className="micro px-3 text-muted hover:text-fg">
+              <button type="button" onClick={() => setAdding(false)} className="micro px-3 text-muted hover:text-accent-text">
                 Cancel
               </button>
             </div>

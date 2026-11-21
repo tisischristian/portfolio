@@ -24,10 +24,10 @@ export default async function MessagesPage({ searchParams }: Props) {
     <>
       <PageHeader label="03 — Messages" title="Messages" />
       <div className="micro mb-6 flex gap-4 font-mono">
-        <Link href="/admin/messages" aria-current={!archived ? "page" : undefined} className={!archived ? "underline underline-offset-4" : "text-muted hover:text-fg"}>
+        <Link href="/admin/messages" aria-current={!archived ? "page" : undefined} className={!archived ? "text-accent-text underline underline-offset-4" : "text-muted hover:text-accent-text"}>
           [inbox]
         </Link>
-        <Link href="/admin/messages?box=archived" aria-current={archived ? "page" : undefined} className={archived ? "underline underline-offset-4" : "text-muted hover:text-fg"}>
+        <Link href="/admin/messages?box=archived" aria-current={archived ? "page" : undefined} className={archived ? "text-accent-text underline underline-offset-4" : "text-muted hover:text-accent-text"}>
           [archived]
         </Link>
       </div>
@@ -39,8 +39,8 @@ export default async function MessagesPage({ searchParams }: Props) {
           {messages.map((m) => (
             <li key={m.id}>
               <details className="group border-b border-line" open={!m.read}>
-                <summary className="flex cursor-pointer list-none items-center gap-3 py-4 hover:bg-line">
-                  <span aria-hidden className={`ml-1 size-2 shrink-0 rounded-full ${m.read ? "border border-current" : "bg-fg"}`} />
+                <summary className="flex cursor-pointer list-none items-center gap-3 py-4 hover:bg-accent/15 hover:text-accent-text">
+                  <span aria-hidden className={`ml-1 size-2 shrink-0 rounded-full ${m.read ? "border border-current" : "bg-accent"}`} />
                   <span className={`truncate ${m.read ? "" : "font-semibold"}`}>{m.name}</span>
                   <span className="hidden truncate text-sm text-muted sm:block">{m.email}</span>
                   <span className="ml-auto flex shrink-0 items-center gap-2">
@@ -69,7 +69,7 @@ export default async function MessagesPage({ searchParams }: Props) {
                     </form>
                     {archived && (
                       <form action={deleteMessage.bind(null, m.id)}>
-                        <ConfirmButton message={`Delete the message from ${m.name} permanently? This can't be undone.`} className={`${btnGhost} hover:bg-fg hover:text-bg`}>
+                        <ConfirmButton message={`Delete the message from ${m.name} permanently? This can't be undone.`} className={`${btnGhost} hover:border-accent hover:bg-accent hover:text-ink`}>
                           Delete forever
                         </ConfirmButton>
                       </form>

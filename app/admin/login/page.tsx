@@ -31,7 +31,7 @@ export default async function LoginPage({ searchParams }: Props) {
               </code>
             </p>
             <form action={signOut}>
-              <button className="micro h-10 rounded-full border border-line-strong px-5 hover:bg-fg hover:text-bg">Sign out</button>
+              <button className="micro h-10 rounded-full border border-line-strong px-5 hover:border-accent hover:bg-accent hover:text-ink">Sign out</button>
             </form>
           </div>
         ) : (

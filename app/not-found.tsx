@@ -10,10 +10,10 @@ export default async function NotFound() {
         <h1 className="display mt-6 text-[length:var(--fs-hero)]">Lost</h1>
         <p className="mt-8 max-w-md text-muted">This page doesn&rsquo;t exist, or it has moved.</p>
         <div className="mt-10 flex gap-3">
-          <Link href="/design" className="micro inline-flex h-11 items-center rounded-full border border-line-strong px-5 hover:bg-fg hover:text-bg">
+          <Link href="/design" className="micro inline-flex h-11 items-center rounded-full border border-line-strong px-5 hover:border-accent hover:bg-accent hover:text-ink">
             Design work
           </Link>
-          <Link href="/data" className="micro inline-flex h-11 items-center rounded-full border border-line-strong px-5 hover:bg-fg hover:text-bg">
+          <Link href="/data" className="micro inline-flex h-11 items-center rounded-full border border-line-strong px-5 hover:border-accent hover:bg-accent hover:text-ink">
             Data work
           </Link>
         </div>

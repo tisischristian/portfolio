@@ -29,7 +29,7 @@ export default async function PreviewPage({ params }: Props) {
           <span className="font-mono">
             Preview · {p.status === "draft" ? "Draft — not public" : "Published"}
           </span>
-          <Link href={`/admin/projects/${p.id}`} className="rounded-full border border-current px-3 py-1.5 hover:bg-bg hover:text-fg">
+          <Link href={`/admin/projects/${p.id}`} className="rounded-full border border-current px-3 py-1.5 transition-colors hover:border-accent hover:bg-accent hover:text-ink">
             <Arrow rotate={-135} /> Back to editor
           </Link>
         </div>

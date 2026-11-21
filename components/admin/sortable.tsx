@@ -82,7 +82,7 @@ export function DragHandle({ label = "Drag to reorder" }: { label?: string }) {
       type="button"
       aria-label={label}
       {...props}
-      className="grid size-9 shrink-0 cursor-grab touch-none place-items-center rounded-full text-muted hover:bg-line hover:text-fg active:cursor-grabbing"
+      className="grid size-9 shrink-0 cursor-grab touch-none place-items-center rounded-full text-muted hover:bg-accent/15 hover:text-accent-text active:cursor-grabbing"
     >
       <svg width="10" height="16" viewBox="0 0 10 16" aria-hidden fill="currentColor">
         {[0, 6, 12].map((y) => [0, 6].map((x) => <circle key={`${x}${y}`} cx={x + 2} cy={y + 2} r="1.5" />))}

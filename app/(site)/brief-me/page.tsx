@@ -35,7 +35,7 @@ export default async function Contact() {
               <ul className="space-y-1">
                 {site.socials.map((s) => (
                   <li key={s.label}>
-                    <a href={s.href} className="inline-flex min-h-6 items-center gap-1 hover:underline">
+                    <a href={s.href} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-6 items-center gap-1 hover:underline">
                       {s.label} <Arrow />
                     </a>
                   </li>

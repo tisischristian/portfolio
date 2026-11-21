@@ -63,7 +63,7 @@ export function MediaLibrary({ initial, usage }: { initial: MediaRow[]; usage: R
           setOver(false);
           upload(e.dataTransfer.files);
         }}
-        className={`grid place-items-center border border-dashed p-10 text-center transition-colors ${over ? "border-fg bg-line" : "border-line-strong"}`}
+        className={`grid place-items-center border border-dashed p-10 text-center transition-colors ${over ? "border-accent bg-accent/10" : "border-line-strong"}`}
       >
         <p className="text-lg">Drop files to upload</p>
         <p className="micro mt-2 text-muted">Images incl. SVG logos (auto-converted to WebP) · MP4/WebM · PDF · CSV/JSON — images ≤ 20 MB, video ≤ 50 MB</p>
@@ -90,7 +90,7 @@ export function MediaLibrary({ initial, usage }: { initial: MediaRow[]; usage: R
               <span className="w-24">
                 {j.state === "uploading" ? (
                   <span className="relative block h-1 overflow-hidden bg-line">
-                    <span className="absolute inset-y-0 w-1/3 animate-[marquee_1s_linear_infinite] bg-fg" />
+                    <span className="absolute inset-y-0 w-1/3 animate-[marquee_1s_linear_infinite] bg-accent" />
                   </span>
                 ) : j.state === "done" ? (
                   "✓ done"
@@ -107,7 +107,7 @@ export function MediaLibrary({ initial, usage }: { initial: MediaRow[]; usage: R
       <div className="mt-10 flex flex-wrap items-center justify-between gap-4">
         <div role="group" aria-label="File type" className="micro flex gap-4 font-mono">
           {(["all", "image", "video", "doc"] as const).map((t) => (
-            <button key={t} type="button" aria-pressed={type === t} onClick={() => setType(t)} className={type === t ? "underline underline-offset-4" : "text-muted hover:text-fg"}>
+            <button key={t} type="button" aria-pressed={type === t} onClick={() => setType(t)} className={type === t ? "text-accent-text underline underline-offset-4" : "text-muted hover:text-accent-text"}>
               [{t}]
             </button>
           ))}
@@ -175,7 +175,7 @@ export function MediaLibrary({ initial, usage }: { initial: MediaRow[]; usage: R
                       if (r.ok) setItems((it) => it.filter((x) => x.id !== m.id));
                       else alert(r.error);
                     }}
-                    className={`${btnGhost} h-8 px-3 hover:bg-fg hover:text-bg`}
+                    className={`${btnGhost} h-8 px-3 hover:border-accent hover:bg-accent hover:text-ink`}
                   >
                     Delete
                   </button>

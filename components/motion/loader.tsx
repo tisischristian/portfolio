@@ -54,7 +54,7 @@ export function Loader({ monogram }: { monogram: string }) {
       <p className="micro font-mono">{monogram}</p>
       <div className="flex items-end justify-between">
         <p className="micro font-mono text-muted">Design · Data</p>
-        <span ref={num} className="font-mono text-[clamp(4rem,14vw,11rem)] leading-none tracking-tight">
+        <span ref={num} className="font-mono text-accent-text text-[clamp(4rem,14vw,11rem)] leading-none tracking-tight">
           000
         </span>
       </div>

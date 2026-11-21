@@ -10,7 +10,7 @@ export function NextProject({ p }: { p: Project | null }) {
         <p className="micro font-mono text-muted">{"// Next exhibit"}</p>
         <p className="display mt-6 flex items-start justify-between gap-6 text-[length:var(--fs-h1)] transition-transform duration-700 ease-[var(--ease)] group-hover:translate-x-3">
           {p.title}
-          <span aria-hidden className="text-[0.6em] transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1">
+          <span aria-hidden className="text-[0.6em] transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-accent-text">
             <ArrowCircle />
           </span>
         </p>

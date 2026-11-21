@@ -74,7 +74,7 @@ export default async function Home() {
             <Link
               href="/manifesto"
               data-magnetic
-              className="micro mt-8 inline-flex h-11 items-center rounded-full border border-line-strong px-5 transition-colors hover:bg-fg hover:text-bg"
+              className="micro mt-8 inline-flex h-11 items-center rounded-full border border-line-strong px-5 transition-colors hover:border-accent hover:bg-accent hover:text-ink"
             >
               More about me
             </Link>
